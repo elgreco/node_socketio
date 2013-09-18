@@ -1,0 +1,39 @@
+<html>
+<body>
+<h3>
+    this is 6 HTML file - with socket.io events
+</h3>
+
+<p id="hello">Nothing to see...</p>
+
+<p>
+    <input id="msgToBroadcast">
+    <input type="button" id="doBroadcast" value="send">
+</p>
+<p id="broadcast"></p>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    function hello(msg){
+        document.getElementById("hello").innerHTML = msg;
+    };
+
+    function broadcast(msg) {
+        document.getElementById("broadcast").innerHTML = document.getElementById("broadcast").innerHTML + msg + "<br>";
+    };
+
+    var socket = io.connect("/", {
+        "connect timeout": 3000, "reconnect": false
+    });
+
+    socket.on("hello", hello);
+    socket.on("broadcast", broadcast);
+
+    document.getElementById("doBroadcast").addEventListener("click", function(){
+        var inp = document.getElementById("msgToBroadcast");
+        socket.emit("msg", inp.value);
+        inp.value = "";
+    });
+</script>
+</body>
+</html>

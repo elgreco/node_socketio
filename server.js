@@ -13,7 +13,12 @@ function connection(socket){
         console.log("diconnected");
     }
 
+    function getMsg(msg) {
+        socket.broadcast.emit("broadcast", msg);
+    }
+
     socket.on("disconnect", disconnect);
+    socket.on("msg", getMsg);
 
     var intv = setInterval(function(){
         socket.emit("hello", Math.random());
