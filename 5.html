@@ -1,0 +1,22 @@
+<html>
+<body>
+<h3>
+    this is 5 HTML file - with socket.io events
+</h3>
+
+<p id="hello">Nothing to see...</p>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    function hello(msg){
+        document.getElementById("hello").innerHTML = msg;
+    };
+
+    var socket = io.connect("/", {
+        "connect timeout": 3000, "reconnect": false
+    });
+
+    socket.on("hello", hello);
+</script>
+</body>
+</html>

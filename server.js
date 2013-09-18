@@ -8,6 +8,18 @@ function server(req, res) {
     }
 }
 
+function connection(socket){
+    function disconnect(){
+        console.log("diconnected");
+    }
+
+    socket.on("disconnect", disconnect);
+
+    var intv = setInterval(function(){
+        socket.emit("hello", Math.random());
+    }, 1000);
+};
+
 var http = require("http"),
     httpServer = http.createServer(server),
     port = 8005,
@@ -25,3 +37,5 @@ io.configure(function(){
 });
 
 httpServer.listen(port);
+
+io.on("connection", connection);
